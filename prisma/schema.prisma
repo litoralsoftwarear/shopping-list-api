@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  name     String
+  username String @unique
+  password String
+
+  stores Store[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Store {
+  id     Int @id @default(autoincrement())
+  userId Int @map("user_id")
+
+  user User @relation(fields: [userId], references: [id])
+
+  name        String
+  image       String
+  description String?
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  Product   Product[]
+
+  @@map("stores")
+}
+
+model Product {
+  id      Int @id @default(autoincrement())
+  storeId Int @map("store_id")
+
+  store Store @relation(fields: [storeId], references: [id])
+
+  name        String
+  image       String
+  description String?
+  price       Float
+  quantity    Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("products")
+}
