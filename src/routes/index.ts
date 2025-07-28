@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { userRoutes } from "./user.routes";
+import { userRoutes } from "../domain/users/user.routes";
 import { storeRoutes } from "./store.routes";
 import { productRoutes } from "./product.routes";
 
