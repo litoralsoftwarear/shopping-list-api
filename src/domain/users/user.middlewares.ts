@@ -1,10 +1,14 @@
 import { NextFunction, Request, Response } from "express"
-
+import jwt from "jsonwebtoken"
 import * as userServices from "./user.services"
+import { IJWTPayload } from "../auth/auth.interfaces"
+import { getToken } from "../../utils/token"
+
 
 export const userExist = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const user = await userServices.getUser({ id: Number(req.params.id) })
+        const { id } = jwt.decode(getToken(req)) as IJWTPayload
+        const user = await userServices.getUser({ id })
 
         if (!user) return res.status(404).json({ message: "El usuario no existe" })
 

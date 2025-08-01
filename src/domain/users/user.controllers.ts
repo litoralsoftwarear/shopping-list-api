@@ -1,9 +1,10 @@
 import { Request, Response } from "express"
 import *  as userServices from "./user.services"
-import ca from "zod/v4/locales/ca.cjs"
+import jwt from "jsonwebtoken"
+import { getToken } from "../../utils/token"
+import { IJWTPayload } from "../auth/auth.interfaces"
 
 // SERVICIOS
-
 export const createUser = async (req: Request, res: Response): Promise<any> => {
     try {
         const { name, username, password } = req.body
@@ -34,11 +35,11 @@ export const getUser = async (req: Request, res: Response): Promise<any> => res.
 
 export const updateUser = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { id } = req.params
+        const { id } = jwt.decode(getToken(req)) as IJWTPayload
         const { name, username, password } = req.body
-        
-        const user = await userServices.updateUser({ id: Number(id), name, username, password })
-        
+
+        const user = await userServices.updateUser({ id, name, username, password })
+
         res.json({ data: user })
     } catch (error) {
         res.status(500).json({ message: "Error al actualizar el usuario" })
@@ -47,7 +48,7 @@ export const updateUser = async (req: Request, res: Response): Promise<any> => {
 
 export const deleteUser = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { id } = req.params
+        const { id } = jwt.decode(getToken(req)) as IJWTPayload
 
         const user = await userServices.deleteUser(Number(id))
 

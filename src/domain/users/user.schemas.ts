@@ -2,7 +2,7 @@ import z from "zod";
 
 const USERNAME_PATTERN = /^[a-zA-Z0-9._]+$/
 
-export const userCreateSchema = z.object({
+export const userCreationSchema = z.object({
     name: z.string("El 'name' deber ser de tipo 'string'")
         .min(3, "El 'name' debe tener al menos 3 caracteres")
         .max(50, "El 'name' debe tener menos de 50 caracteres"),
