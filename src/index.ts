@@ -1,9 +1,14 @@
+import "module-alias/register"
+
 import express from "express"
 import cors from "cors"
+import morgan from "morgan"
+
 import mainRoutes from "./routes"
 
 const app = express()
 
+app.use(morgan("dev"))
 app.use(cors({ origin: "*" }))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())

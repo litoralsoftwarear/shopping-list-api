@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import jwt, { JsonWebTokenError, JwtPayload, verify } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import { JWT_EXPIRATION_TIME, JWT_SECRET_KEY } from "../config/jwt.config"
 import { IJWTPayload } from "../domain/auth/auth.interfaces"
 

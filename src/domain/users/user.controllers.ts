@@ -13,7 +13,7 @@ export const createUser = async (req: Request, res: Response): Promise<any> => {
 
         res.json({
             message: "¡El usuario se ha creado corretamente!",
-            data: user
+            payload: user
         })
     } catch (error) {
         res.status(500).json({ message: "Error al crear el usuario" })
@@ -24,14 +24,14 @@ export const getAll = async (_: Request, res: Response): Promise<void> => {
     try {
         const users = await userServices.getUsers({})
 
-        res.json({ data: users })
+        res.json({ payload: users })
     } catch (error) {
         res.status(500).json({ message: "Error al obtener los usuarios" })
     }
 
 }
 
-export const getUser = async (req: Request, res: Response): Promise<any> => res.json({ data: req.body.user })
+export const getUser = async (req: Request, res: Response): Promise<any> => res.json({ payload: req.body.user })
 
 export const updateUser = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -40,7 +40,7 @@ export const updateUser = async (req: Request, res: Response): Promise<any> => {
 
         const user = await userServices.updateUser({ id, name, username, password })
 
-        res.json({ data: user })
+        res.json({ payload: user })
     } catch (error) {
         res.status(500).json({ message: "Error al actualizar el usuario" })
     }
@@ -52,7 +52,7 @@ export const deleteUser = async (req: Request, res: Response): Promise<any> => {
 
         const user = await userServices.deleteUser(Number(id))
 
-        res.json({ data: user })
+        res.json({ payload: user })
 
     } catch (error) {
         res.status(500).json({ message: "Error al eliminar el usuario" })

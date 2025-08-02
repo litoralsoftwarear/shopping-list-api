@@ -12,6 +12,8 @@ export const userExist = async (req: Request, res: Response, next: NextFunction)
 
         if (!user) return res.status(404).json({ message: "El usuario no existe" })
 
+        if (!req["body"]) req["body"] = {}
+
         req.body["user"] = user
 
         next()
@@ -30,6 +32,7 @@ export const usernameIsAvailable = async (req: Request, res: Response, next: Nex
 
         next()
     } catch (error) {
+        console.log(error)
         res.sendStatus(500)
     }
 }
